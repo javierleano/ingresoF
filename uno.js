@@ -7,59 +7,62 @@ b)la edad promedio en total.
 c)el hombre mas pesado.
 pedir datos por prompt y mostrar por document.write o console.log
 */
-function mostrar()
-{
+function mostrar() {
 	let nombre;
 	let peso;
 	let sexo;
 	let edad;
-	let acumMujeres = 0;
 	let contadorMujeres = 0;
-	let pesoMax;
-	let contador = 0;
-	let hombreMasPesado = 0;
 	let promedio;
-	let acumEdad = 0;
-	let contadorEdad = 0;
+	let acumuladorEdad = 0;
+	let NombreMasPesado;
+	let HombreMasPesado;
+	let flagHombre = 0;
 
+	for (let i = 0; i < 5; i++) {
 
-	for (let i = 0; i < 5; i++){
-	nombre = prompt("Ingrese Nombre");
-	
-
-	peso = parseInt(prompt("Ingrese Peso valido"));
-	
-	sexo = prompt("Ingrese Sexo (f o m)");
-	while(sexo != 'f' && sexo != 'm'){
-	sexo = prompt("Error Ingrese Sexo (f o m)");
-	}
-	
-	edad = prompt("Ingrese edad");
-     if (edad > 0){ 
-	 }
-	
-	switch(sexo){
-		case 'f' :
-		contadorMujeres++;
-		if (edad > 0){
-			acumEdad++;
+		nombre = prompt("Ingrese Nombre");
+		while (!(isNaN(nombre))) {
+			nombre = prompt("Error Ingrese Nombre");
 		}
-		break;
-		case 'm' : 
-		pesoMax = peso;
-		if (edad > 0){
-			acumEdad++;
+
+		peso = parseFloat(prompt("Ingrese Su peso"));
+		while (peso < 1 || isNaN(peso)) {
+			peso = parseFloat(prompt("Error Ingrese un peso Valido: "));
 		}
-		break;
-	}	
+
+		sexo = prompt("Ingrese Sexo f-m");
+		while (sexo != 'f' && sexo != 'm') {
+			sexo = prompt("Error Ingrese Sexo f-m");
+		}
+		edad = parseInt(prompt("Ingrese Edad"));
+		while (edad < 1 || isNaN(edad)) {
+			edad = parseInt(prompt("Error Ingrese Edad"));
+		}
+
+		acumuladorEdad += edad;
+
+		if (sexo == 'f') {
+			contadorMujeres++;
+		}
+		else {
+			if (flagHombre == 0 || peso > HombreMasPesado) {
+				HombreMasPesado = peso;
+				NombreMasPesado = nombre;
+				flagHombre = 1;
+			}
+		}
 	}
-   
-	   promedio = acumEdad / 5;
 
-	console.log("la cantidad de mujeres son : " + contadorMujeres);
-	console.log("la edad promedio es " + promedio);
-	console.log("el hombre mas pesado " + pesoMax);
+	promedio = acumuladorEdad / 5;
 
+	console.log("La cantidad de mujeres Son " + contadorMujeres);
+	console.log("La edad promedio es de : " + promedio);
+	if (flagHombre == 0) {
+		console.log("No se Ingreso ningun hombre");
+	}
+	else {
+		console.log("El hombre mas pesado es : " + NombreMasPesado + " y pesa " + HombreMasPesado + "Kg");
+	}
 
-	
 }

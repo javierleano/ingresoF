@@ -6,67 +6,76 @@ a)informar el peso total de la compra.
 b)la marca del más caro de los líquidos
 c)la marca del más barato de los sólidos
 */function mostrar() {
-  let producto;
   let marca;
   let precio;
   let peso;
   let tipo;
+  let acumuladorPeso = 0;
+  let marcaCaroliquido;
+  let precioCaroLiquido;
+  let flagLiquido = 0;
+  let marcaBaratoSolido;
+  let precioBaratoSolido;
+  let flagSolido = 0;
   let seguir;
-  let acumPeso = 0;
-  let acumMarca = 0;
-  let marcaMasCaro;
-  let marcaMax;
-  let marcaMasbarato;
-  let contadorPeso = 0;
-  let acumPrecio = 0;
-  let precioMax;
-  let productoCaro;
-  let precioBarato;
-  let productoBarato;
+
+
   do {
-
-    producto = prompt("Ingrese un producto");
-
     marca = prompt("Ingrese Marca");
-
-
-    precio = prompt("Ingrese Precio");
-    while (precio < 1) {
-      precio = prompt("Ingrese Precio Mayor a 0");
-    }
-    if (acumPrecio == 0 || precio > precioMax){
-      precioMax = precio;
-      productoCaro = marca;
+    while (!(isNaN(marca))) {
+      marca = prompt("Error Ingrese Nombre de la Marca");
     }
 
-    if (acumPrecio == 0 || precio > precioBarato ){
-      precioBarato = precio;
-      productoBarato = marca;
-      
+    precio = parseFloat(prompt("Ingrese Precio"));
+    while (precio < 1 || isNaN(precio)) {
+      precio = parseFloat(prompt("Error Ingrese Precio"));
     }
 
-    peso = parseInt(prompt("Ingrese Peso en Kg"));
-    while (peso < 1) {
-      peso = prompt("Error Ingrese Peso Mayor a 0");
-    
+    peso = parseFloat(prompt("Ingrese Peso"));
+    while (peso < 1 || isNaN(peso)) {
+      peso = parseFloat(prompt("Error Ingrese Peso Valido"));
     }
-    tipo = prompt("El producto es solido O liquido ");
+
+    tipo = prompt("Ingrese Tipo solido/liquido");
     while (tipo != 'solido' && tipo != 'liquido') {
-      tipo = prompt("error El producto es solido O liquido ");
+      tipo = prompt("Error Ingrese Tipo solido/liquido");
+    }
+
+    acumuladorPeso += peso;
+
+    if (tipo == 'liquido') {
+      if (flagLiquido == 0 || precio > precioCaroLiquido) {
+        precioCaroLiquido = precio;
+        marcaCaroliquido = marca;
+        flagLiquido = 1;
+      }
+    }
+
+    else {
+      if (flagSolido == 0 || precio < precioBaratoSolido) {
+        precioBaratoSolido = precio;
+        marcaBaratoSolido = marca;
+        flagSolido = 1;
+      }
+
 
     }
 
-    switch (marca) {
-      
-        
-
-    }
-
-    seguir = prompt("Desea Agregar Otro Producto? :");
+    seguir = prompt("Desea Agregar Otro Producto? : ")
   } while (seguir == 's');
 
-  console.log("el peso total de la compra es : " + acumPeso);
-  console.log("la marca del más caro de los líquidos : " + productoBarato);
-  console.log("la marca del más barato de los sólidos : " + marcaMasbarato);
+  console.log("El peso total de la compra es de " + acumuladorPeso);
+  if (flagLiquido == 0) {
+    console.log("No se ingresaron liquidos");
+  }
+  else {
+    console.log("La marca del liquido mas caro es " + marcaCaroliquido + " y su precio es " + precioCaroLiquido);
+  }
+  if (flagSolido == 0) {
+    console.log("No se ingresaron Solidos");
+  }
+  else {
+    console.log("La marca del solido mas barato es " + marcaBaratoSolido + " y su precio es " + precioBaratoSolido);
+  }
 
 }
